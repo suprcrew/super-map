@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2](https://github.com/suprcrew/super-map/compare/v0.0.1...v0.0.2) (2021-08-01)
+
+
+### Bug Fixes
+
+* Make use of index files for single access file. ([f7a155b](https://github.com/suprcrew/super-map/commit/f7a155b0cfe629afce5226ae74f4a5135f77e243))
+
 ### 0.0.1 (2021-08-01)
 
 
