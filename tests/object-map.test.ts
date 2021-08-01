@@ -1,29 +1,29 @@
-import {mapObject, ObjectMapFunction} from '../src/object-map';
+import { mapObject, ObjectMapFunction } from '../src/object-map';
 
 interface TargetTestType {
-  "foo": number,
-  "bar": string
+  foo: number,
+  bar: string
 }
 
 interface SourceTestType {
-  "baz": number,
-  "zap": string
+  baz: number,
+  zap: string
 }
 
 const sourceObj: SourceTestType = {
   baz: 1,
   zap: '2',
-}
+};
 
 const targetObj: TargetTestType = {
   foo: 1,
   bar: '2',
-}
+};
 
 const objectMap = {
   foo: (input: SourceTestType) => input.baz,
-  bar: (input: SourceTestType) => input.zap
-}
+  bar: (input: SourceTestType) => input.zap,
+};
 
 describe('objectMap', () => {
   test('should map values to target typed object', () => {

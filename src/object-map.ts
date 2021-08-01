@@ -1,4 +1,5 @@
-import {jpValue} from './helpers';
+/* eslint-disable @typescript-eslint/ban-types */
+import { JSONPath } from 'jsonpath-plus';
 
 export type ObjectMapFunction<T> = (input: object) => T;
 
@@ -23,6 +24,7 @@ function extractFromObject<T>(inputObject: object, extractionMap: ObjectMap<T>):
   const extractionKeys: Array<keyof T> = Object.keys(extractionMap) as Array<keyof T>;
 
   extractionKeys.forEach((extractionKey: keyof T): void => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     resultObject[extractionKey] = _extractForKey(extractionMap, extractionKey, inputObject) as any; // screw this
   });
 
@@ -48,4 +50,30 @@ function _extractForKey<T>(extractionMap: ObjectMap<T>, extractionKey: keyof T, 
   } else {
     return extractionFn(extractor, inputObject);
   }
+}
+
+export type ConverterFunction<T> = (object: any) => T;
+
+export function identity<T>(input: T): T {
+  return input;
+}
+
+export function jpArray<T>(jsonPath: string, convert: ConverterFunction<T> = identity): ObjectMapFunction<T> {
+  return (inputObject: object): T => {
+    return convert(JSONPath({ json: inputObject, path: jsonPath }));
+  };
+}
+
+export function jpQuery<T>(jsonPath: string, convert: ConverterFunction<T> = identity): ObjectMapFunction<T> {
+  return (inputObject: object): T => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
+    return JSONPath({ json: inputObject, path: jsonPath }).map(convert);
+  };
+}
+
+export function jpValue<T>(jsonPath: string, convert: ConverterFunction<T> = identity): ObjectMapFunction<T> {
+  return (inputObject: object): T => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    return convert(JSONPath({ json: inputObject, path: jsonPath })[0]);
+  };
 }
