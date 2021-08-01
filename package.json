@@ -2,7 +2,7 @@
   "name": "@suprcrew/super-map",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
     "lint": "./node_modules/eslint/bin/eslint.js --color './src/**/*.ts'",
     "test:run": "./node_modules/jest/bin/jest.js tests",
